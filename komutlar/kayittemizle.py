@@ -7,6 +7,8 @@ import os
 # .env dosyasını yükle
 load_dotenv()
 
+allowed_servers = [1252053810369794129]
+
 class KayitTemizle(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -14,6 +16,10 @@ class KayitTemizle(commands.Cog):
     @commands.command(name='kayittemizle')
     @commands.has_permissions(administrator=True)
     async def kayittemizle(self, ctx):
+        if ctx.guild.id not in allowed_servers:
+            await ctx.send('Bu komutu bu sunucuda kullanamazsınız.')
+            return
+
         edit_url = 'https://rentry.co/katroxipler/edit'
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
