@@ -8,6 +8,8 @@ import re
 # .env dosyasını yükle
 load_dotenv()
 
+allowed_servers = [1252053810369794129]
+
 class Kayit(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -20,6 +22,10 @@ class Kayit(commands.Cog):
 
     @commands.command(name='kayit')
     async def kayit(self, ctx, ip: str):
+        if ctx.guild.id not in allowed_servers:
+            await ctx.send('Bu komutu bu sunucuda kullanamazsınız.')
+            return
+
         if not self.is_valid_ip(ip):
             await ctx.send(f'Geçersiz IP adresi formatı: {ip}')
             return
